@@ -1,0 +1,436 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./dist/output.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" />
+</head>
+<body>
+
+  <div class="mx-auto px-6 lg:max-w-3xl pt-12">
+    <form onsubmit="getTokens(event)" id="databaseForm">
+      <div class="mb-6">
+        <label for="database_url" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Enter Database URL</label>
+        <!-- TODO(tugan): Fetch from Local Storage Instead -->
+        <input type="text" id="database_url" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="">
+      </div>
+
+       <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" id="getTokenButton">Get Tokens</button>
+    </form>
+
+    <form onsubmit="updateFilterSettings(event)" id="filterForm">
+      <div class="my-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+        
+        <div>
+          <label for="launched" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Launch</label>
+          <select id="launched" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value='dc'>Don't Care</option>
+            <option value='true'>Yes</option>
+            <option value='false'>No</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="stealth" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Stealth</label>
+          <select id="stealth" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value='dc'>Don't Care</option>
+            <option value='true'>Yes</option>
+            <option value='false'>No</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="mayberug" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Maybe Rugger</label>
+          <select id="mayberug" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value='dc'>Don't Care</option>
+            <option value='true'>Yes</option>
+            <option value='false'>No</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="marked" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Marked</label>
+          <select id="marked" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value='dc'>Don't Care</option>
+            <option value='true'>Yes</option>
+            <option value='false'>No</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="start_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Start Date</label>
+          <div class="relative">
+            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+              <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+            </div>
+            <input datepicker type="text" id="start_date" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" datepicker-format="mm-dd-yyyy" placeholder="Select date">
+          </div>
+        </div>
+
+        <div>
+          <label for="deployer_age" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Deployer Age</label>
+          <div class="relative">
+            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+              <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+            </div>
+            <input datepicker type="text" id="deployer_age" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" datepicker-format="mm-dd-yyyy" placeholder="Select date">
+          </div>
+        </div>
+
+        <div>
+          <label for="approvals" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Minimum Approvals</label>
+          <input type="text" id="approvals" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Empty for Don't Care">
+        </div>
+
+      </div>
+
+      <button type="submit" class="text-white bg-green-400 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-100 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-400 dark:focus:ring-green-600">Filter Tokens</button>
+    </form>
+
+    <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-lg hover:shadow-xl overflow-hidden md:max-w-3xl my-12">
+        <div class="p-8 my-auto">
+          <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
+            Status Messages
+          </div>
+          <p class="mt-2 text-sm text-black" id="textualOutputSection">
+            No output yet
+          </p>
+        </div>
+    </div>
+
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <table class="w-full text-sm text-left text-black-500 dark:text-black-400">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400" id="tableHeader">
+             <!-- Table headers will go here -->
+          </thead>
+          <tbody id="tableBody">
+             <!-- Table data will go here -->
+          </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="px-6 mx-auto md:max-w-max pb-12">
+    <!-- Display Tokens in three columns -->
+    <div class="my-6 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="tokenList">
+      <!-- Token data will go here -->
+    </div>
+  </div>
+
+<script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+<script src="https://unpkg.com/flowbite@1.4.1/dist/datepicker.js"></script>
+<script type="text/javascript">
+  // ------------------------------ Utility Functions ------------------------------
+
+  function setTableHeaders(headerValues) {
+    let tableHeader = document.getElementById('tableHeader');
+    tableHeader.innerHTML = ''; // Clear existing headers
+    let row = document.createElement('tr');
+    for (const val of headerValues) {
+      let colVal = document.createElement('th');
+      colVal.className = 'px-6 py-3';
+      colVal.scope = 'col';
+      colVal.textContent = val;
+      row.appendChild(colVal);
+    }
+    tableHeader.appendChild(row);
+  }
+
+  function addTableRow(rowValues) {
+    let tableBody = document.getElementById('tableBody');
+    let row = document.createElement("tr");
+    row.className = "bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600";
+    for (const val of rowValues) {
+      let colVal = document.createElement('td');
+      colVal.className = 'px-6 py-4';
+      colVal.textContent = val;
+      row.appendChild(colVal);
+    }
+    tableBody.appendChild(row);
+  }
+
+  function addTable(headers, rows) {
+    setTableHeaders(headers);
+    for (const row of rows) {
+      addTableRow(row);
+    }
+  }
+
+  function getDisplayAge(age) {
+    if (!age || age == 'unknown' || age < 1000 ) {
+      return '';
+    }
+    return `${(new Date(age)).toLocaleDateString(undefined, {month: '2-digit', day: '2-digit', year: 'numeric'})} ${(new Date(age)).getHours().toString().padStart(2, 0)}:${(new Date(age)).getMinutes().toString().padStart(2, 0)}`;
+  }
+
+  function getDisplayAgeDiff(deployer_age, contract_age) {
+    if (!deployer_age || deployer_age == 'unknown' || deployer_age < 1000 ) {
+      return '';
+    }
+    if (!contract_age || contract_age == 'unknown' || contract_age < 1000 ) {
+      return '';
+    }
+    let diff = (new Date(contract_age)) - (new Date(deployer_age * 1000));
+    let days = Math.floor(diff / (24 * 60 * 60 * 1000));
+    diff = diff % (24 * 60 * 60 * 1000);
+    let hours = Math.floor(diff / (60 * 60 * 1000));
+    diff = diff % (60 * 60 * 1000);
+    let minutes = Math.floor((diff / (60 * 1000)))
+    
+    days = days ? days + 'd ' : ''
+    hours = hours ? hours + 'h ' : ''
+    minutes = minutes ? minutes + 'm' : ''
+
+    return `${days} ${hours} ${minutes}`;
+  }
+
+  function setOutputText(val) {
+    document.getElementById('textualOutputSection').textContent = val;
+  }
+
+  function setOutputHtml(val) {
+    document.getElementById('textualOutputSection').innerHTML = val;
+  }
+
+  // ------------------------------ Main Scripts ------------------------------
+
+  function loadDefaultSettings() {
+    if (!!localStorage.dburl) {
+      let database_url = document.getElementById('database_url');
+      database_url.value = localStorage.dburl;
+    }
+    setOutputText("Default settings loaded successfully...");
+  }
+
+  var tokens = {};
+  
+  // Make objects filterable
+  Object.filter = (obj, predicate) => 
+                  Object.fromEntries(Object.entries(obj).filter(predicate));
+  var settings = {
+    launched: null,
+    stealth: null,
+    mayberug: null,
+    marked: null,
+    start_date: 0,
+    deployer_age: 0,
+    approvals: null,
+  };
+
+ function getTokens(event) {
+    if (!event) return;
+    let database_url = event.target.database_url.value;
+    if (!!database_url) {
+      localStorage.setItem('dburl', database_url);
+    } else {
+      alert("Valid database URL required");
+      event.preventDefault();
+      return;
+    }
+
+    setOutputText("Fetching tokens...");
+
+    fetch(database_url + `?${Date.now()}`, {
+      cache: "no-store"
+    })
+    .then((db) => db.json())
+    .then((resp) => {
+      tokens = resp;
+      setOutputText("Tokens fetched...");
+      displayTokens(tokens);
+      setOutputText("Token List Updated...");
+    })
+    .catch((error) =>{
+      setOutputText(`Failed to get tokens ${error}`);
+    });
+
+    // Prevent page refresh.
+    event.preventDefault();
+  }
+
+  function displayTokens(tokens) {
+    let tokenList = document.getElementById('tokenList');
+    tokenList.innerHTML = '';  // clear existing data
+
+    for (const [address, tokenData] of Object.entries(tokens)) {
+      // Age Related Info
+      var deployer_age_html = getDisplayAge(tokenData.age * 1000);
+      if (!!deployer_age_html) {
+        deployer_age_html = `<p class="text-sm text-gray-700 truncate dark:text-gray-400">
+          Deployer Age: ${deployer_age_html}
+        </p>`;
+      }
+      var contract_age_html = getDisplayAge(tokenData.created);
+      if (!!contract_age_html) {
+        contract_age_html = `<p class="text-sm text-gray-700 truncate dark:text-gray-400">
+          Contract Age: ${contract_age_html}
+        </p>`;
+      }
+      var age_diff_html = getDisplayAgeDiff(tokenData.age, tokenData.created);
+      if (!!age_diff_html) {
+        age_diff_html = `<p class="text-sm text-gray-700 truncate dark:text-gray-400">
+          Elapsed Time: ${age_diff_html}
+        </p>`;
+      }
+
+      // Status Badge
+      var status = '';
+      if (!tokenData.launched) {
+        status += `<span class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">Not Launched</span>
+        `;
+      }
+      if (tokenData.rugtxs) {
+        let addressortx = tokenData.rugtxs[0].length > 42 ? 'TX' : 'ADDRESS';
+        status += `<span class="bg-red-100 text-red-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-red-200 dark:text-red-900">
+          Maybe Rugger <a href="https://etherscan.io/${addressortx}/${tokenData.rugtxs[0]}" target="_blank" class="text-blue-700 hover:underline dark:text-blue-500">(${addressortx})</a>
+        </span>`;
+      }
+      if (tokenData.stealth) {
+         status += `<span class="bg-gray-100 text-gray-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-gray-200 dark:text-gray-900">Stealth</span>
+        `;
+      }
+
+      // Main HTML
+      let token = document.createElement("div");
+      token.className = "p-4 max-w-md bg-white mx-auto rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700";
+      token.innerHTML = `
+        <div class="flex items-center mb-2">
+           ${status}
+        </div>
+        <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+            <li class="py-2 sm:py-3">
+                <div class="flex items-center space-x-4">
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                            ${tokenData.name || 'No Name'} (${tokenData.symbol || 'No Symbol'})
+                        </p>
+                        <p class="text-sm text-gray-700 truncate dark:text-gray-400">
+                            Supply: ${tokenData.supply || 'N/A'}
+                        </p>
+                        <p class="text-sm text-gray-700 truncate dark:text-gray-400">
+                            Decimals: ${tokenData.decimals || 'N/A'}
+                        </p>
+                        <p class="text-sm text-gray-700 truncate dark:text-gray-400">
+                            Pre-Approvals: ${tokenData.approves || 'N/A'}
+                        </p>
+                        <br>
+                        <p class="text-sm text-gray-700 truncate dark:text-gray-400">
+                          <a href="https://etherscan.io/address/${tokenData.creator}" target="_blank" class="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500">
+                            Creator
+                          </a>
+                          <br>
+                          <code>${tokenData.creator || 'N/A'}</code>
+                        </p>
+                        <p class="text-sm text-gray-700 truncate dark:text-gray-400">
+                          <a href="https://etherscan.io/token/${address}" target="_blank" class="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500">
+                            Contract
+                          </a>
+                          <br>
+                          <code>${address || 'N/A'}</code>
+                        </p>
+                        <br>
+                        ${deployer_age_html}
+                        ${contract_age_html}
+                        ${age_diff_html}
+                    </div>
+                </div>
+            </li>
+        </ul>
+      `;
+      tokenList.prepend(token);
+    }
+
+  }
+
+  function filterTokens(tokens, settings) {
+    console.log("Started filtering tokens...");
+
+    if (!tokens) {
+      console.log("No tokens to filter");
+      return;
+    }
+    if (!settings) {
+      console.log("No filter settings found.");
+      return;
+    } else {
+      console.log("settings:", settings);
+    }
+
+    // NOT WORKING YET
+    return Object.filter(tokens, (address, tokenData) => {
+      if (!tokenData) {
+        return false;
+      }
+      
+      // if (settings.date > token.created) {
+      //   return false;
+      // }
+      
+      // if (settings.funded <= token.age) {
+      //   return false;
+      // }
+
+      if (!!settings.launched && !!settings.launched != !!tokenData.launched) {
+        return false;
+      }
+
+      if (!!settings.stealth && !!settings.stealth != !!tokenData.stealth) {
+        return false;
+      }
+      if (!!settings.approvals && tokenData.approves < settings.approvals_value) {
+        return false;
+      }
+
+      if (!!settings.mayberug && !!settings.mayberug != !!tokenData.rugtxs) {
+        return false;
+      }
+
+      // if (!!settings.hidden && settings.hidden != !!token.hidden) {
+      //   return false;
+      // }
+
+      // if (!!settings.marked && settings.marked != !!token.marked) {
+      //   return false;
+      // }
+      return true;
+    });
+  }
+
+
+  function updateFilterSettings(event) {
+    let parseValue = (val) => {
+      if (!val) return null;
+      if (val == 'dc' || val == "Don't Care") return null;
+      if (val == 'true') return true;
+      if (val == 'false') return false;
+      if (val.match(/\d{2}-\d{2}-\d{4}/)) return (new Date(val)).getTime();
+      return Number(val);
+    };
+    settings.launched = parseValue(event.target.launched.value);
+    settings.stealth = parseValue(event.target.stealth.value);
+    settings.approvals = parseValue(event.target.approvals.value);
+    settings.mayberug = parseValue(event.target.mayberug.value);
+    settings.marked = parseValue(event.target.marked.value);
+    settings.start_date = parseValue(event.target.start_date.value);
+    settings.deployer_age = parseValue(event.target.deployer_age.value);
+
+    if (!tokens || Object.keys(tokens).length === 0) {
+      alert("No more tokens to filter. Click 'Get Tokens' again first!") ;
+      return;
+    }
+    
+    tokens = filterTokens(tokens, settings);
+    displayTokens(tokens);
+
+    // Prevent page refresh.
+    event.preventDefault();
+  }
+
+
+  // Main Logic
+  loadDefaultSettings();
+  getTokens();
+</script>
+</body>
+</html>
