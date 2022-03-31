@@ -238,7 +238,7 @@
     .then((resp) => {
       tokens = resp;
       setOutputText("Tokens fetched...");
-      displayTokens(tokens);
+      displayTokens(filterTokens(tokens, settings));
       setOutputText("Token List Updated...");
     })
     .catch((error) =>{
@@ -344,61 +344,67 @@
   }
 
   function filterTokens(tokens, settings) {
-    console.log("Started filtering tokens...");
+
+  	setOutputText('Started filtering tokens...');
 
     if (!tokens) {
-      console.log("No tokens to filter");
+      setOutputText("No tokens to filter");
       return;
     }
     if (!settings) {
-      console.log("No filter settings found.");
+      setOutputText("No filter settings found.");
       return;
     } else {
       console.log("settings:", settings);
     }
 
-    // NOT WORKING YET
-    return Object.filter(tokens, (address, tokenData) => {
-      if (!tokenData) {
-        return false;
-      }
-      
-      // if (settings.date > token.created) {
-      //   return false;
-      // }
-      
-      // if (settings.funded <= token.age) {
-      //   return false;
-      // }
+    let ret = Object.filter(tokens, token => {
 
-      if (!!settings.launched && !!settings.launched != !!tokenData.launched) {
-        return false;
-      }
+    	let data = token[1];
 
-      if (!!settings.stealth && !!settings.stealth != !!tokenData.stealth) {
-        return false;
-      }
-      if (!!settings.approvals && tokenData.approves < settings.approvals_value) {
-        return false;
-      }
+    	console.log(data);
 
-      if (!!settings.mayberug && !!settings.mayberug != !!tokenData.rugtxs) {
-        return false;
-      }
+    	if (settings.launched !== null && !!settings.launched != !!data.launched) {
+    		return false;
+    	}
 
-      // if (!!settings.hidden && settings.hidden != !!token.hidden) {
-      //   return false;
-      // }
+    	if (settings.mayberug !== null && !!settings.mayberug != !!data.rugtxs) {
+    		return false;
+    	}
 
-      // if (!!settings.marked && settings.marked != !!token.marked) {
-      //   return false;
-      // }
-      return true;
+    	if (settings.stealth !== null && !!settings.stealth != !!data.stealth) {
+    		return false;
+    	}
+
+    	if (settings.marked !== null && !!settings.marked != !!data.marked) {
+    		return false;
+    	}
+
+    	if (settings.approvals && settings.approvals > data.approves) {
+    		return false;
+    	}
+
+    	if (settings.start_date && settings.start_date > data.created) {
+    		return false;
+    	}
+
+    	if (settings.deployer_age && settings.deployer_age <= data.age * 1000) {
+    		return false;
+    	}
+
+    	return true;
+
     });
+
+    setOutputText('filtering done');
+
+    return ret;
+
   }
 
 
   function updateFilterSettings(event) {
+  	console.log(event);
     let parseValue = (val) => {
       if (!val) return null;
       if (val == 'dc' || val == "Don't Care") return null;
@@ -420,8 +426,7 @@
       return;
     }
     
-    tokens = filterTokens(tokens, settings);
-    displayTokens(tokens);
+    displayTokens(filterTokens(tokens, settings));
 
     // Prevent page refresh.
     event.preventDefault();
