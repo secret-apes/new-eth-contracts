@@ -85,6 +85,12 @@
 
       </div>
 
+      <label for="save_filter" class="flex relative items-center mb-4 cursor-pointer">
+        <input type="checkbox" id="save_filter" class="sr-only" checked>
+        <div class="w-11 h-6 bg-gray-200 rounded-full border border-gray-200 toggle-bg dark:bg-gray-700 dark:border-gray-600"></div>
+        <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Remeber Filter Settings</span>
+      </label>
+
       <button type="submit" class="text-white bg-green-400 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-100 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-400 dark:focus:ring-green-600">Filter Tokens</button>
     </form>
 
@@ -93,7 +99,7 @@
           <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
             Status Messages
           </div>
-          <p class="mt-2 text-sm text-black" id="textualOutputSection">
+          <p class="mt-2 text-sm text-black" id="textualOutputSection" style="white-space: pre">
             No output yet
           </p>
         </div>
@@ -189,22 +195,19 @@
     document.getElementById('textualOutputSection').textContent = val;
   }
 
+  function appendOutputText(val) {
+    let curContent = document.getElementById('textualOutputSection').textContent;
+    document.getElementById('textualOutputSection').textContent = `${curContent}\r\n${val}`;
+  }
+
   function setOutputHtml(val) {
     document.getElementById('textualOutputSection').innerHTML = val;
   }
 
   // ------------------------------ Main Scripts ------------------------------
 
-  function loadDefaultSettings() {
-    if (!!localStorage.dburl) {
-      let database_url = document.getElementById('database_url');
-      database_url.value = localStorage.dburl;
-    }
-    setOutputText("Default settings loaded successfully...");
-  }
-
   var tokens = {};
-  
+
   // Make objects filterable
   Object.filter = (obj, predicate) => 
                   Object.fromEntries(Object.entries(obj).filter(predicate));
@@ -217,6 +220,45 @@
     deployer_age: 0,
     approvals: null,
   };
+
+  let parseValueForSetting = (val) => {
+    if (!val) return null;
+    if (val == 'dc' || val == "Don't Care") return null;
+    if (val == 'true') return true;
+    if (val == 'false') return false;
+    if (val.match(/\d{2}-\d{2}-\d{4}/)) return (new Date(val)).getTime();
+    return Number(val);
+  };
+
+  function loadDefaultSettings(callback) {
+    if (!!localStorage.dburl) {
+      let database_url = document.getElementById('database_url');
+      database_url.value = localStorage.dburl;
+    }
+    if (!!localStorage.filter_settings) {
+      try {
+        let filter_settings = JSON.parse(localStorage.filter_settings);
+        document.getElementById('launched').value = filter_settings.launched;
+        document.getElementById('stealth').value = filter_settings.stealth;
+        document.getElementById('approvals').value = filter_settings.approvals;
+        document.getElementById('mayberug').value = filter_settings.mayberug;
+        document.getElementById('marked').value = filter_settings.marked;
+        document.getElementById('start_date').value = filter_settings.start_date;
+        document.getElementById('deployer_age').value = filter_settings.deployer_age;
+        settings.launched = parseValueForSetting(filter_settings.launched);
+        settings.stealth = parseValueForSetting(filter_settings.stealth);
+        settings.approvals = parseValueForSetting(filter_settings.approvals);
+        settings.mayberug = parseValueForSetting(filter_settings.mayberug);
+        settings.marked = parseValueForSetting(filter_settings.marked);
+        settings.start_date = parseValueForSetting(filter_settings.start_date);
+        settings.deployer_age = parseValueForSetting(filter_settings.deployer_age);
+      } catch (error) {
+        console.error("Failed to load filter settings", error);
+      }
+    }
+    setOutputText("Default settings loaded successfully...");
+    callback();
+  }
 
  function getTokens(event) {
     if (!event) return;
@@ -237,12 +279,12 @@
     .then((db) => db.json())
     .then((resp) => {
       tokens = resp;
-      setOutputText("Tokens fetched...");
+      appendOutputText("Tokens fetched...");
       displayTokens(filterTokens(tokens, settings));
-      setOutputText("Token List Updated...");
+      appendOutputText("Token List Updated...");
     })
     .catch((error) =>{
-      setOutputText(`Failed to get tokens ${error}`);
+      appendOutputText(`Failed to get tokens ${error}`);
     });
 
     // Prevent page refresh.
@@ -345,14 +387,14 @@
 
   function filterTokens(tokens, settings) {
 
-  	setOutputText('Started filtering tokens...');
+  	appendOutputText('Started filtering tokens...');
 
     if (!tokens) {
-      setOutputText("No tokens to filter");
+      appendOutputText("No tokens to filter");
       return;
     }
     if (!settings) {
-      setOutputText("No filter settings found.");
+      appendOutputText("No filter settings found.");
       return;
     } else {
       console.log("settings:", settings);
@@ -394,7 +436,7 @@
 
     });
 
-    setOutputText('filtering done');
+    appendOutputText('Filtering done');
 
     return ret;
 
@@ -402,25 +444,32 @@
 
 
   function updateFilterSettings(event) {
-  	console.log(event);
-    let parseValue = (val) => {
-      if (!val) return null;
-      if (val == 'dc' || val == "Don't Care") return null;
-      if (val == 'true') return true;
-      if (val == 'false') return false;
-      if (val.match(/\d{2}-\d{2}-\d{4}/)) return (new Date(val)).getTime();
-      return Number(val);
-    };
-    settings.launched = parseValue(event.target.launched.value);
-    settings.stealth = parseValue(event.target.stealth.value);
-    settings.approvals = parseValue(event.target.approvals.value);
-    settings.mayberug = parseValue(event.target.mayberug.value);
-    settings.marked = parseValue(event.target.marked.value);
-    settings.start_date = parseValue(event.target.start_date.value);
-    settings.deployer_age = parseValue(event.target.deployer_age.value);
+    setOutputText("Updating tokens based on new filters...");
+    settings.launched = parseValueForSetting(event.target.launched.value);
+    settings.stealth = parseValueForSetting(event.target.stealth.value);
+    settings.approvals = parseValueForSetting(event.target.approvals.value);
+    settings.mayberug = parseValueForSetting(event.target.mayberug.value);
+    settings.marked = parseValueForSetting(event.target.marked.value);
+    settings.start_date = parseValueForSetting(event.target.start_date.value);
+    settings.deployer_age = parseValueForSetting(event.target.deployer_age.value);
+    if (event.target.save_filter.checked) {
+      localStorage.setItem('filter_settings', JSON.stringify({
+        // Save the raw values to be compatible with the input types
+        launched: event.target.launched.value,
+        stealth: event.target.stealth.value,
+        approvals: event.target.approvals.value,
+        mayberug: event.target.mayberug.value,
+        marked: event.target.marked.value,
+        start_date: event.target.start_date.value,
+        deployer_age: event.target.deployer_age.value,
+      }));
+      appendOutputText("Filter settings saved.");
+    }
 
     if (!tokens || Object.keys(tokens).length === 0) {
       alert("No more tokens to filter. Click 'Get Tokens' again first!") ;
+      // Prevent page refresh.
+      event.preventDefault();
       return;
     }
     
@@ -432,8 +481,7 @@
 
 
   // Main Logic
-  loadDefaultSettings();
-  getTokens();
+  loadDefaultSettings(getTokens);
 </script>
 </body>
 </html>
