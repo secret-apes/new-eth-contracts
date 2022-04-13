@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/CryptoTokenTracker/static/css/main.470b6dee.css",
-    "main.js": "/CryptoTokenTracker/static/js/main.f9eabf6b.js",
-    "static/js/787.cda612ba.chunk.js": "/CryptoTokenTracker/static/js/787.cda612ba.chunk.js",
-    "static/media/metamask.svg": "/CryptoTokenTracker/static/media/metamask.6667afc0f90c86faecea36f5e3a6d1af.svg",
-    "index.html": "/CryptoTokenTracker/index.html",
-    "main.470b6dee.css.map": "/CryptoTokenTracker/static/css/main.470b6dee.css.map",
-    "main.f9eabf6b.js.map": "/CryptoTokenTracker/static/js/main.f9eabf6b.js.map",
-    "787.cda612ba.chunk.js.map": "/CryptoTokenTracker/static/js/787.cda612ba.chunk.js.map"
+    "main.css": "//secret-apes.github.io/CryptoTokenTracker/static/css/main.470b6dee.css",
+    "main.js": "//secret-apes.github.io/CryptoTokenTracker/static/js/main.a7e2e223.js",
+    "static/js/787.cda612ba.chunk.js": "//secret-apes.github.io/CryptoTokenTracker/static/js/787.cda612ba.chunk.js",
+    "static/media/metamask.svg": "//secret-apes.github.io/CryptoTokenTracker/static/media/metamask.6667afc0f90c86faecea36f5e3a6d1af.svg",
+    "index.html": "//secret-apes.github.io/CryptoTokenTracker/index.html",
+    "main.470b6dee.css.map": "//secret-apes.github.io/CryptoTokenTracker/static/css/main.470b6dee.css.map",
+    "main.a7e2e223.js.map": "//secret-apes.github.io/CryptoTokenTracker/static/js/main.a7e2e223.js.map",
+    "787.cda612ba.chunk.js.map": "//secret-apes.github.io/CryptoTokenTracker/static/js/787.cda612ba.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.470b6dee.css",
-    "static/js/main.f9eabf6b.js"
+    "static/js/main.a7e2e223.js"
   ]
 }
