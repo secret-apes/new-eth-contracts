@@ -84,11 +84,15 @@ function GateKeeper() {
 
     if (MetaMaskOnboarding.isMetaMaskInstalled()) {
       if (sessionStorage.loggedIn) {
-        // Avoids auto-connect unless already logged-in for the session.
-        // This helps prevent the auto pop-up on first page load.
-        window.ethereum
-          .request({ method: 'eth_requestAccounts' })
-          .then(handleNewAccounts);
+        if (isBackdoor()) {
+          dispatch({ type: "LOGIN", accounts: [] });
+        } else {
+          // Avoids auto-connect unless already logged-in for the session.
+          // This helps prevent the auto pop-up on first page load.
+          window.ethereum
+            .request({ method: 'eth_requestAccounts' })
+            .then(handleNewAccounts);
+        }
       }
       window.ethereum.on('accountsChanged', handleNewAccounts);
       return () => {
@@ -105,8 +109,7 @@ function GateKeeper() {
       if (!sessionStorage.loggedIn) {
         sessionStorage.setItem('loggedIn', 'true');
       }
-    }
-    if (MetaMaskOnboarding.isMetaMaskInstalled()) {
+    } else if (MetaMaskOnboarding.isMetaMaskInstalled()) {
       window.ethereum
         .request({ method: 'eth_requestAccounts' })
         .then(accounts => {
