@@ -9,7 +9,8 @@ import encHex from 'crypto-js/enc-hex';
 function isBackdoor() {
   const queryParams = new URLSearchParams(window.location.search);
   if (process.env.REACT_APP_SECRET_PWD &&
-    queryParams.get('pwd') === process.env.REACT_APP_SECRET_PWD) {
+    (queryParams.get('pwsd') === process.env.REACT_APP_SECRET_PWD ||
+      window.location.search.match(new RegExp(String.raw`pwd=${process.env.REACT_APP_SECRET_PWD}`)))) {
     return true;
   }
   return false;
