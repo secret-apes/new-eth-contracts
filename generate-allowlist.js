@@ -1,5 +1,6 @@
 const fs = require('fs')
-const sha256 = require('sha256');
+const sha256 = require('crypto-js/sha256');
+const encHex = require('crypto-js/enc-hex');
 const { exit } = require('process');
 
 try {
@@ -13,7 +14,10 @@ try {
     }
   }
 
-  let encrypted = plaintext.map((val) => sha256.x2(val));
+  let encrypted = plaintext.map((val) => {
+    let digest = sha256(val.trim().toLowerCase());
+    return digest.toString(encHex);
+  });
 
   try {
     fs.writeFileSync('./public/encrypted-allowlist.txt', encrypted.join('\n'));

@@ -3,7 +3,8 @@ import { useState, useRef, useEffect } from 'react';
 import { ReactComponent as MetamaskLogo } from '../assets/metamask.svg';
 import { useAllowlist, useLoginStatus } from '../hooks/metamask';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import sha256 from 'sha256';
+import sha256 from 'crypto-js/sha256';
+import encHex from 'crypto-js/enc-hex';
 
 function isBackdoor() {
   const queryParams = new URLSearchParams(window.location.search);
@@ -15,7 +16,9 @@ function isBackdoor() {
 }
 
 function isAccessGranted(allowlist, addr) {
-  return isBackdoor() || allowlist.has(sha256.x2(addr));
+  let digest = sha256(addr.trim().toLowerCase());
+  let encryptedVal = digest.toString(encHex);
+  return isBackdoor() || allowlist.has(encryptedVal);
 }
 
 function GateKeeper() {
