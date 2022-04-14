@@ -1,6 +1,7 @@
 const initialState = {
   loggedIn: false,
-  accounts: []
+  accounts: [],
+  allowlist: new Set() // encrypted
 };
 
 export default function reducer(state = initialState, action) {
@@ -9,6 +10,8 @@ export default function reducer(state = initialState, action) {
       return { ...state, loggedIn: true, accounts: action.accounts };
     case "LOGOUT":
       return { ...state, loggedIn: false, accounts: [] };
+    case "SET_ALLOWLIST":
+      return { ...state, allowlist: action.allowlist };
     default:
       return { ...state };
   }

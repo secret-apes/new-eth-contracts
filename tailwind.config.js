@@ -9,4 +9,6 @@ module.exports = {
   plugins: [
     require('flowbite/plugin')
   ],
+  // Uncomment to force dark mode
+  darkMode: 'class',
 }

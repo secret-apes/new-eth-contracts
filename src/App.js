@@ -4,6 +4,7 @@ import { useLoginStatus } from './hooks/metamask';
 import { useFilteredTokens } from "./hooks/database";
 import DataFetcher from './components/DataFetcher';
 import GateKeeper from './components/GateKeeper';
+import DarkModeToggle from './components/DarkModeToggle';
 import TokenSnippet from './components/TokenSnippet';
 import SettingsPanel from './components/SettingsPanel';
 import StatusMessage from './components/StatusMessage';
@@ -14,6 +15,7 @@ function App() {
   const tokens = useFilteredTokens();
 
   useEffect(() => {
+    dispatch({ type: 'FETCH_ALLOWLIST' });
     dispatch({ type: "LOAD_DEFAULT_DATABASE_URL" });
     dispatch({ type: "LOAD_DEFAULT_FILTERS" });
   }, [dispatch]);
@@ -26,11 +28,14 @@ function App() {
   }, [dispatch, tokens]);
 
   if (!loggedIn) {
-    return <div className='flex justify-center items-center h-screen'>
-      <div className='grid grid-cols-1 place-content-center'>
-        <GateKeeper />
+    return (
+      <div className='flex justify-center items-center h-screen bg-white dark:bg-slate-900'>
+        <div className='grid grid-cols-1 place-content-center'>
+          <GateKeeper />
+        </div>
+        <DarkModeToggle />
       </div>
-    </div>;
+    );
   }
 
   var tokenSnippets = [];
@@ -41,9 +46,12 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="bg-white dark:bg-slate-900 min-h-screen">
       <div className="mx-auto px-10 md:px-6 lg:px-3 md:max-w-xl lg:max-w-3xl pt-12">
-        <GateKeeper />
+        <div className="flex justify-between">
+          <GateKeeper />
+          <DarkModeToggle />
+        </div>
         <DataFetcher />
         <SettingsPanel />
         <StatusMessage />

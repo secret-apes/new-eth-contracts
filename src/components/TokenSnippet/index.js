@@ -40,13 +40,13 @@ function TokenSnippet({ address, tokenData }) {
   var statusBadges = [];
   if (!tokenData.launched) {
     statusBadges.push((
-      <span key="launched" className={`bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900`}>Not Launched</span>
+      <span key="launched" className={`bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-800 dark:text-emerald-200`}>Not Launched</span>
     ));
   }
   if (tokenData.rugtxs) {
     let addressortx = tokenData.rugtxs[0].length > 42 ? 'TX' : 'ADDRESS';
     statusBadges.push((
-      <span key="rugtxs" className={`bg-red-100 text-red-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-red-200 dark:text-red-900`}>Maybe Rugger <a href={`https://etherscan.io/${addressortx}/${tokenData.rugtxs[0]}`} target="_blank" rel="noreferrer" className="text-blue-700 hover:underline dark:text-blue-500">({addressortx})</a></span>
+      <span key="rugtxs" className={`bg-red-100 text-red-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-red-300 dark:text-red-900`}>Maybe Rugger <a href={`https://etherscan.io/${addressortx}/${tokenData.rugtxs[0]}`} target="_blank" rel="noreferrer" className="text-blue-700 hover:underline dark:text-blue-800">({addressortx})</a></span>
     ))
   }
   if (tokenData.stealth) {
@@ -79,24 +79,24 @@ function TokenSnippet({ address, tokenData }) {
               <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
                 {tokenDisplayName}
               </p>
-              <p className="text-sm text-gray-700 truncate dark:text-gray-400">
+              <p className="text-sm text-gray-700 truncate dark:text-slate-400">
                 Supply: {tokenData.supply || 'N/A'}
               </p>
-              <p className="text-sm text-gray-700 truncate dark:text-gray-400">
+              <p className="text-sm text-gray-700 truncate dark:text-slate-400">
                 Decimals: {tokenData.decimals || 'N/A'}
               </p>
-              <p className="text-sm text-gray-700 truncate dark:text-gray-400">
+              <p className="text-sm text-gray-700 truncate dark:text-slate-400">
                 Pre-Approvals: {tokenData.approves || 'N/A'}
               </p>
               <br />
-              <p className="text-sm text-gray-700 truncate dark:text-gray-400">
+              <p className="text-sm text-gray-700 truncate dark:text-slate-400">
                 <a href={`https://etherscan.io/address/${tokenData.creator}`} target="_blank" rel="noreferrer" className="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500">
                   Creator
                 </a>
                 <br />
                 <code>{tokenData.creator || 'N/A'}</code>
               </p>
-              <p className="text-sm text-gray-700 truncate dark:text-gray-400">
+              <p className="text-sm text-gray-700 truncate dark:text-slate-400">
                 <a href={`https://etherscan.io/token/${address}`} target="_blank" rel="noreferrer" className="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500">
                   Contract
                 </a>
@@ -106,19 +106,19 @@ function TokenSnippet({ address, tokenData }) {
               <br />
               {
                 deployerAge ?
-                  <p className="text-sm text-gray-700 truncate dark:text-gray-400">
+                  <p className="text-sm text-gray-700 truncate dark:text-slate-400">
                     Deployer Age: {deployerAge}
                   </p> : null
               }
               {
                 contractAge ?
-                  <p className="text-sm text-gray-700 truncate dark:text-gray-400">
+                  <p className="text-sm text-gray-700 truncate dark:text-slate-400">
                     Contract Age: {contractAge}
                   </p> : null
               }
               {
                 elapsedTime ?
-                  <p className="text-sm text-gray-700 truncate dark:text-gray-400">
+                  <p className="text-sm text-gray-700 truncate dark:text-slate-400">
                     Elapsed Time: {elapsedTime}
                   </p> : null
               }
