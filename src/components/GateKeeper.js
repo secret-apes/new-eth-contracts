@@ -40,7 +40,7 @@ function GateKeeper() {
   useEffect(() => {
     if (isBackdoor()) {
       if (isLoggedIn) {
-        setButtonText("MetaMask Connected!");
+        setButtonText("Backdoor Mode!");
         setButtonTextColor('text-green-700');
         setIsDisabled(true);
       } else {
