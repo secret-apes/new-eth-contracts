@@ -1,16 +1,18 @@
 {
   "files": {
-    "main.css": "/new-eth-contracts/static/css/main.470b6dee.css",
-    "main.js": "/new-eth-contracts/static/js/main.51cd0ef8.js",
-    "static/js/787.cda612ba.chunk.js": "/new-eth-contracts/static/js/787.cda612ba.chunk.js",
-    "static/media/metamask.svg": "/new-eth-contracts/static/media/metamask.6667afc0f90c86faecea36f5e3a6d1af.svg",
-    "index.html": "/new-eth-contracts/index.html",
-    "main.470b6dee.css.map": "/new-eth-contracts/static/css/main.470b6dee.css.map",
-    "main.51cd0ef8.js.map": "/new-eth-contracts/static/js/main.51cd0ef8.js.map",
-    "787.cda612ba.chunk.js.map": "/new-eth-contracts/static/js/787.cda612ba.chunk.js.map"
+    "main.css": "/CryptoTokenTracker/static/css/main.5c44b8fc.css",
+    "main.js": "/CryptoTokenTracker/static/js/main.b2e1000f.js",
+    "static/js/787.cda612ba.chunk.js": "/CryptoTokenTracker/static/js/787.cda612ba.chunk.js",
+    "static/media/metamask.svg": "/CryptoTokenTracker/static/media/metamask.6667afc0f90c86faecea36f5e3a6d1af.svg",
+    "index.html": "/CryptoTokenTracker/index.html",
+    "static/media/sun.svg": "/CryptoTokenTracker/static/media/sun.7b0c4859b69442057ea3cbc6edfca5e9.svg",
+    "static/media/moon.svg": "/CryptoTokenTracker/static/media/moon.7fd5a5c7e36411231fcf8a96bfe5e515.svg",
+    "main.5c44b8fc.css.map": "/CryptoTokenTracker/static/css/main.5c44b8fc.css.map",
+    "main.b2e1000f.js.map": "/CryptoTokenTracker/static/js/main.b2e1000f.js.map",
+    "787.cda612ba.chunk.js.map": "/CryptoTokenTracker/static/js/787.cda612ba.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.470b6dee.css",
-    "static/js/main.51cd0ef8.js"
+    "static/css/main.5c44b8fc.css",
+    "static/js/main.b2e1000f.js"
   ]
 }
