@@ -5,8 +5,8 @@ const initialState = {
         stealth: null,
         mayberug: null,
         marked: null,
-        start_date: 0,
-        deployer_age: 0,
+        start_date: '',
+        deployer_date: '',
         approvals: null,
     },
     statusMessage: 'No status messages yet'

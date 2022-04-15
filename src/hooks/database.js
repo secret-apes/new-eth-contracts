@@ -24,6 +24,15 @@ function useFilteredTokens() {
   const tokens = useSelector((store) => store.TokensReducer.tokens);
   const filters = useSelector((store) => store.SettingsReducer.filter);
 
+  let dateStrToTime = (val) => {
+    if (val !== null && typeof (val) === 'string') {
+      if (val.match(/\d{2}[-/]\d{2}[-/]\d{4}|\d{4}[-/]\d{2}[-/]\d{2}/)) {
+        return (new Date(val)).getTime();
+      }
+    }
+    return 0;
+  };
+
   let filteredTokens = useMemo(() => {
     return Object.filter(tokens, token => {
 
@@ -45,11 +54,11 @@ function useFilteredTokens() {
         return false;
       }
 
-      if (filters.start_date && filters.start_date > data.created) {
+      if (filters.start_date && dateStrToTime(filters.start_date) > data.created) {
         return false;
       }
 
-      if (filters.deployer_age && filters.deployer_age <= data.age * 1000) {
+      if (filters.deployer_date && dateStrToTime(filters.deployer_date) > data.age * 1000) {
         return false;
       }
 

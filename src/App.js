@@ -24,6 +24,8 @@ function App() {
     let tokensCount = Object.keys(tokens).length;
     if (tokensCount) {
       dispatch({ type: "SET_STATUS_MESSAGE", msg: `Displaying ${tokensCount} (filtered) tokens.` })
+    } else {
+      dispatch({ type: "SET_STATUS_MESSAGE", msg: `No tokens available for display.` })
     }
   }, [dispatch, tokens]);
 

@@ -8,15 +8,15 @@ function getDateDisplay(age) {
   return `${(new Date(age)).toLocaleDateString(undefined, { month: '2-digit', day: '2-digit', year: 'numeric' })} ${(new Date(age)).getHours().toString().padStart(2, 0)}:${(new Date(age)).getMinutes().toString().padStart(2, 0)}`;
 }
 
-function getElapsedTime(deployer_age, contract_age) {
-  if (!deployer_age || deployer_age === 'unknown' || deployer_age < 1000) {
+function getElapsedTime(deployer_date, contract_age) {
+  if (!deployer_date || deployer_date === 'unknown' || deployer_date < 1000) {
     return '';
   }
   if (!contract_age || contract_age === 'unknown' || contract_age < 1000) {
     return '';
   }
 
-  let diff = (new Date(contract_age)) - (new Date(deployer_age));
+  let diff = (new Date(contract_age)) - (new Date(deployer_date));
   let days = Math.floor(diff / (24 * 60 * 60 * 1000));
   diff = diff % (24 * 60 * 60 * 1000);
   let hours = Math.floor(diff / (60 * 60 * 1000));
