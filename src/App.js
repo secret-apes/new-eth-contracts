@@ -18,12 +18,14 @@ function App() {
     dispatch({ type: 'FETCH_ALLOWLIST' });
     dispatch({ type: "LOAD_DEFAULT_DATABASE_URL" });
     dispatch({ type: "LOAD_DEFAULT_FILTERS" });
+    dispatch({ type: "LOAD_AUTO_REFRESH_PREFERENCE" });
   }, [dispatch]);
 
   useEffect(() => {
     let tokensCount = Object.keys(tokens).length;
+    let now = new Date();
     if (tokensCount) {
-      dispatch({ type: "SET_STATUS_MESSAGE", msg: `Displaying ${tokensCount} (filtered) tokens.` })
+      dispatch({ type: "SET_STATUS_MESSAGE", msg: `Displaying ${tokensCount} (filtered) tokens. (${now.toISOString()})` })
     } else {
       dispatch({ type: "SET_STATUS_MESSAGE", msg: `No tokens available for display.` })
     }

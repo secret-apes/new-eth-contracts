@@ -8,6 +8,11 @@ function useFilterSettings(id) {
     return filter;
 }
 
+function useAutoRefresh() {
+    const autoRefresh = useSelector((store) => store.SettingsReducer.autoRefresh);
+    return autoRefresh;
+}
+
 function useStatusMessage() {
     const statusMessage = useSelector((store) => store.SettingsReducer.statusMessage);
     return statusMessage;
@@ -70,4 +75,4 @@ function useColorScheme() {
     return [isDark, toggleColorScheme];
 }
 
-export { useFilterSettings, useStatusMessage, useColorScheme };
+export { useFilterSettings, useStatusMessage, useColorScheme, useAutoRefresh };

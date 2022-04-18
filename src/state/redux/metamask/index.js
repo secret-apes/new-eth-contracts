@@ -31,7 +31,7 @@ function* fetchAllowlist() {
         }
       }
       yield put({ type: "SET_ALLOWLIST", allowlist });
-      console.info("Fetched allowlist: ", allowlist);
+      // console.info("Fetched allowlist: ", allowlist);
     }
   } catch (err) {
     console.error("Failed to fetch allowlist:".err);

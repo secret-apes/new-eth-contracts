@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useSelector } from "react-redux";
 
 // Make objects filterable
@@ -23,6 +23,7 @@ function useTokens() {
 function useFilteredTokens() {
   const tokens = useSelector((store) => store.TokensReducer.tokens);
   const filters = useSelector((store) => store.SettingsReducer.filter);
+  const [filteredTokens, setFilteredTokens] = useState(tokens);
 
   let dateStrToTime = (val) => {
     if (val !== null && typeof (val) === 'string') {
@@ -33,8 +34,8 @@ function useFilteredTokens() {
     return 0;
   };
 
-  let filteredTokens = useMemo(() => {
-    return Object.filter(tokens, token => {
+  useMemo(async () => {
+    return setFilteredTokens(Object.filter(tokens, token => {
 
       let data = token[1];
 
@@ -69,8 +70,9 @@ function useFilteredTokens() {
 
       return true;
 
-    })
+    }));
   }, [tokens, filters]);
+
   return filteredTokens;
 }
 

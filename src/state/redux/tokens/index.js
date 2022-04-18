@@ -42,8 +42,10 @@ function* fetchTokens({ databaseUrl }) {
         type: 'APPEND_STATUS_MESSAGE',
         msg: `Fetched ${Object.keys(data).length} (unfiltered) tokens from database`
       });
-      localStorage.setItem('dburl', databaseUrl);
-      console.info(`Saved working database url to local storage for future use: ${databaseUrl}`);
+      if (localStorage.dburl !== databaseUrl) {
+        localStorage.setItem('dburl', databaseUrl);
+        console.info(`Saved working database url to local storage for future use: ${databaseUrl}`);
+      }
     }
   } catch (err) {
     yield put({ type: "FETCH_TOKEN_FAILED", err });
