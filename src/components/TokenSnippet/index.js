@@ -54,12 +54,22 @@ function TokenSnippet({ address, tokenData }) {
       <span key="stealth" className={`bg-gray-100 text-gray-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-gray-200 dark:text-gray-900`}>Stealth</span>
     ));
   }
+  
+  var deployerInfo = [];
+  if (!!tokenData.balance) {
+    deployerInfo.push(`${tokenData.balance} ETH`);
+  }
+  if (!!tokenData.cex) {
+    deployerInfo.push(tokenData.cex);
+  }
+  let deployerInfoHtml = ` (${deployerInfo.join(', ')})`;
 
   let htmlToCopy = `${tokenDisplayName}<br><a href='https://etherscan.io/address/${tokenData.creator}'>Creator</a>: ${tokenData.creator}<br><a href='https://etherscan.io/token/${address}'>Contract</a>: ${address}<br>Created: ${contractAge || 'N/A'}`;
 
   let textToCopy = `${tokenDisplayName}\r\nCreator: https://etherscan.io/address/${tokenData.creator}\r\nContract: https://etherscan.io/token/${address}\r\nCreated: ${contractAge || 'N/A'}`
 
   let bookmarkSavedTokenInfo = { address, name: tokenData.name, symbol: tokenData.symbol };
+
 
   return (
     <div className="p-4 max-w-md bg-white mx-auto rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
@@ -91,8 +101,9 @@ function TokenSnippet({ address, tokenData }) {
               <br />
               <p className="text-sm text-gray-700 truncate dark:text-slate-400">
                 <a href={`https://etherscan.io/address/${tokenData.creator}`} target="_blank" rel="noreferrer" className="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500">
-                  Creator
+                  Deployer
                 </a>
+                {deployerInfoHtml}
                 <br />
                 <code>{tokenData.creator || 'N/A'}</code>
               </p>

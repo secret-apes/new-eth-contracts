@@ -37,6 +37,11 @@ function* fetchTokens({ databaseUrl }) {
       yield put({ type: "FETCH_TOKEN_FAILED", err: new Error("response data is not json") });
       yield put({ type: "APPEND_STATUS_MESSAGE", msg: `Failed to fetch tokens. Response not json.` });
     } else {
+      var fundingSources = Array.from(new Set(Object.entries(data).map(d => d[1].cex)));
+      fundingSources = fundingSources.map(x => x.replace(/\d+$/, '').trim());
+      fundingSources = fundingSources.filter(x => x.length > 0);
+      fundingSources = Array.from(new Set(fundingSources)).sort();
+      yield put({ type: "SET_FUNDING_SOURCES", fundingSources });
       yield put({ type: "SET_TOKENS", tokens: data });
       yield put({
         type: 'APPEND_STATUS_MESSAGE',

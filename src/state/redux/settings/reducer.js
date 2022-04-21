@@ -8,6 +8,8 @@ const initialState = {
         start_date: '',
         deployer_date: '',
         approvals: null,
+        min_deployer_balance: null,
+        cex: null,
     },
     autoRefresh: false,
     statusMessage: 'No status messages yet'

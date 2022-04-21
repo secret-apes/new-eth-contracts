@@ -8,8 +8,13 @@ Object.filter = (obj, predicate) =>
 function useDefaultDatabaseUrl() {
   const databaseUrl = useSelector((store) => store.SettingsReducer.defaultDatabaseUrl);
   return databaseUrl;
-
 }
+
+function useFundingSources() {
+  const fundingSources = useSelector((store) => store.TokensReducer.fundingSources);
+  return fundingSources;
+}
+
 function isTokenBookmarked(address) {
   return localStorage.getItem(`token-${address}`) !== null;
 }
@@ -63,6 +68,14 @@ function useFilteredTokens() {
         return false;
       }
 
+      if (filters.min_deployer_balance && filters.min_deployer_balance > data.balance) {
+        return false;
+      }
+
+      if (filters.cex && !data.cex.startsWith(filters.cex)) {
+        return false;
+      }
+
       // Bookmark is different and the state is saved in localStorage
       if (filters.marked !== null && !!filters.marked !== !!isTokenBookmarked(token[0])) {
         return false;
@@ -77,4 +90,4 @@ function useFilteredTokens() {
 }
 
 
-export { useDefaultDatabaseUrl, useTokens, useFilteredTokens, isTokenBookmarked };
+export { useDefaultDatabaseUrl, useTokens, useFilteredTokens, useFundingSources, isTokenBookmarked };

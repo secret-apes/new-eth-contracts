@@ -3,9 +3,13 @@ import { useDispatch } from "react-redux";
 import Trilean from './Trilean';
 import DatePicker from './DatePicker';
 import NumericInput from './NumericInput';
+import DropdownSelect from './DropdownSelect';
+import { useFundingSources } from '../../hooks/database';
+
 
 function SettingsPanel() {
   const dispatch = useDispatch();
+  const fundingSources = useFundingSources();
 
   let handleRememberFilter = (e) => {
     dispatch({ type: "SAVE_FILTERS" });
@@ -21,6 +25,8 @@ function SettingsPanel() {
         <DatePicker id="start_date" label="Start Date" />
         <DatePicker id="deployer_date" label="Deployer Date" />
         <NumericInput id="approvals" label="Minimum Approvals" />
+        <NumericInput id="min_deployer_balance" label="Min Deployer Balance" />
+        <DropdownSelect id="cex" label="Funding Sources" options={fundingSources} />
       </div>
 
       {/* <div className="p-4 mb-4 text-sm text-yellow-700 bg-yellow-100 dark:text-stone-200 dark:bg-yellow-700 rounded-lg dark:bg-yellow-200 dark:text-yellow-800" role="alert">
