@@ -9,6 +9,9 @@ try {
   var plaintext = [];
   for (var line of data.split('\n')) {
     line = line.trim();
+    if (line.startsWith("#") || line.startsWith("//")) {
+      continue;
+    }
     if (line) {
       plaintext.push(line);
     }

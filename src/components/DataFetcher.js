@@ -41,18 +41,6 @@ function DataFetcher() {
     return () => clearTimeout(refetchTimer.current);
   }, [isAutoRefresh, refetchTimer, isInitialFetch, databaseUrl, dispatch]);
 
-  let autoRefetchToggle = (
-    <label htmlFor="autoRefresh" className="flex relative items-center cursor-pointer">
-      {
-        isAutoRefresh ?
-          <input type="checkbox" id="autoRefresh" className="sr-only" defaultChecked onChange={toggleAutoRefresh} /> :
-          <input type="checkbox" id="autoRefresh" className="sr-only" onChange={toggleAutoRefresh} />
-      }
-      <div className="w-11 h-6 bg-gray-200 rounded-full border border-gray-200 toggle-bg dark:bg-gray-700 dark:border-gray-600">
-      </div>
-      <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Auto Refresh (every {REFETCH_INTERVAL_SECONDS} secs)</span>
-    </label>
-  );
 
   return (
     <div id="databaseForm">
@@ -65,12 +53,22 @@ function DataFetcher() {
           onChange={(e) => setDatabaseUrl(e.target.value)} placeholder={databaseUrl} value={databaseUrl} />
       </div>
 
-      <div className='flex items-center space-x-5'>
-        <button type="submit" className="text-white bg-blue-700 dark:bg-blue-800 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={fetchData} id="getTokenButton">
+      <div className='md:flex items-center gap-4'>
+
+        <button type="submit" className="mb-4 md:mb-0 text-white bg-blue-700 dark:bg-blue-800 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={fetchData} id="getTokenButton">
           Get Tokens
         </button>
 
-        {autoRefetchToggle}
+        <label htmlFor="autoRefresh" className="flex relative cursor-pointer">
+          {
+            isAutoRefresh ?
+              <input type="checkbox" id="autoRefresh" className="sr-only" defaultChecked onChange={toggleAutoRefresh} /> :
+              <input type="checkbox" id="autoRefresh" className="sr-only" onChange={toggleAutoRefresh} />
+          }
+          <div className="w-11 h-6 bg-gray-200 rounded-full border border-gray-200 toggle-bg dark:bg-gray-700 dark:border-gray-600">
+          </div>
+          <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Auto Refresh (every {REFETCH_INTERVAL_SECONDS} secs)</span>
+        </label>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 function copyTextToClipboard(text, html) {
-  if (!navigator.clipboard) {
+  if (!navigator.clipboard || !window.ClipboardItem) {
     var textArea = document.createElement("textarea");
     textArea.value = text;
     textArea.style.top = "0";

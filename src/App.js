@@ -61,7 +61,7 @@ function App() {
         <StatusMessage />
       </div>
 
-      <div className="px-6 mx-auto md:max-w-max pb-12">
+      <div className="md:px-6 mx-auto md:max-w-max pb-12">
         {/* <!-- Display Tokens in three columns --> */}
         <div className="my-6 grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4" id="tokenList">
           {/* <!-- Token data will go here --> */}
