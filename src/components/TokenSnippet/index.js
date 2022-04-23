@@ -66,7 +66,7 @@ function TokenSnippet({ address, tokenData }) {
 
   let htmlToCopy = `${tokenDisplayName}<br><a href='https://etherscan.io/address/${tokenData.creator}'>Creator</a>: ${tokenData.creator}<br><a href='https://etherscan.io/address/${address}#code'>Contract</a>: ${address}<br>Created: ${contractAge || 'N/A'}`;
 
-  let textToCopy = `${tokenDisplayName}\r\nCreator: https://etherscan.io/address/${tokenData.creator}\r\nContract: https://etherscan.io/token/${address}\r\nCreated: ${contractAge || 'N/A'}`
+  let textToCopy = `${tokenDisplayName}\r\nCreator: https://etherscan.io/address/${tokenData.creator}\r\nContract: https://etherscan.io/address/${address}#code\r\nCreated: ${contractAge || 'N/A'}`
 
   let bookmarkSavedTokenInfo = { address, name: tokenData.name, symbol: tokenData.symbol };
 
