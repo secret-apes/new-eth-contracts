@@ -108,7 +108,7 @@ function TokenSnippet({ address, tokenData }) {
                 <code>{tokenData.creator || 'N/A'}</code>
               </p>
               <p className="text-sm text-gray-700 truncate dark:text-slate-400">
-                <a href={`https://etherscan.io/token/${address}`} target="_blank" rel="noreferrer" className="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500">
+                <a href={`https://etherscan.io/address/${address}#code`} target="_blank" rel="noreferrer" className="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500">
                   Contract
                 </a>
                 <br />
