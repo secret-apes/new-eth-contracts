@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "version": "0.1.0",
-  "homepage": "https://gan-tu.github.io/CryptoTokenTracker",
+  "homepage": "https://secret-apes.github.io/new-eth-contracts/",
   "dependencies": {
     "@mantine/core": "^3.6.7",
     "@mantine/hooks": "^3.6.7",
