@@ -4,6 +4,7 @@ import Trilean from './Trilean';
 import DatePicker from './DatePicker';
 import NumericInput from './NumericInput';
 import DropdownSelect from './DropdownSelect';
+import SearchBox from './SearchBox';
 import { useFundingSources } from '../../hooks/database';
 
 
@@ -27,6 +28,7 @@ function SettingsPanel() {
         <NumericInput id="approvals" label="Minimum Approvals" />
         <NumericInput id="min_deployer_balance" label="Min Deployer Balance" />
         <DropdownSelect id="cex" label="Funding Sources" options={fundingSources} />
+        <SearchBox id="tokenName" label="Token Name" />
       </div>
 
       {/* <div className="p-4 mb-4 text-sm text-yellow-700 bg-yellow-100 dark:text-stone-200 dark:bg-yellow-700 rounded-lg dark:bg-yellow-200 dark:text-yellow-800" role="alert">

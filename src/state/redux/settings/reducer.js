@@ -10,6 +10,7 @@ const initialState = {
         approvals: null,
         min_deployer_balance: null,
         cex: null,
+        tokenName: '',
     },
     autoRefresh: false,
     statusMessage: 'No status messages yet'

@@ -76,6 +76,10 @@ function useFilteredTokens() {
         return false;
       }
 
+      if (filters.tokenName && !data.name.toLowerCase().includes(filters.tokenName.toLowerCase())) {
+        return false;
+      }
+
       // Bookmark is different and the state is saved in localStorage
       if (filters.marked !== null && !!filters.marked !== !!isTokenBookmarked(token[0])) {
         return false;
